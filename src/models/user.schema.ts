@@ -1,5 +1,4 @@
-import { Schema, Document, model } from 'mongoose';
-import { response } from 'express';
+import { Schema, model } from 'mongoose';
 
 const UserSchema = Schema({
     name: {
@@ -12,31 +11,33 @@ const UserSchema = Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        email: true
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        min: 6,
+        max: 10
     }
 });
 
+UserSchema.static('encryptPassword', (password) => {
 
-//Methods
+    const bcrypt = require('bcrypt');
+    return bcrypt.hashSync(password, 10);
 
-UserSchema.methods.registerUser = async function(user: IUserSchema) {
-    await this.create(user)
-    .then(response => {
-        return response.json('Usuário criado');
-    }, _error => {
-        return response.status(400).send('Error ao criar usuário');
-    });
-}
+});
 
-interface IUserSchema extends Document {
-    name: string;
-    email: string;
-    photo: string;
-    password: string;
-}
 
-export default model('User', UserSchema)
+UserSchema.static('isValidPassword', (password, hash) => {
+
+    const bcrypt = require('bcrypt');
+    return bcrypt.compareSync(password, hash);
+
+});
+
+
+const User = model('User', UserSchema);
+
+export default User;

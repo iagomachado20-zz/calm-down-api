@@ -1,15 +1,15 @@
+import { DataBase } from './db/connection';
 import express from "express";
 import routerMainApp from "./routes/routes-app";
-import ConnectionDB from "./db/connection";
+
+import mongoose from 'mongoose';
 
 const app = express();
 
+mongoose.connect(DataBase.connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+
 app.use(express.json());
 app.use(routerMainApp);
-
-//DB
-const db = new ConnectionDB();
-db.connect();
 
 app.listen(3000, () => {
     console.log('Aplicação rodando na porta 3000');
