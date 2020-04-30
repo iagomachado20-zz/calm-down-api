@@ -14,7 +14,7 @@ mongoose.connect(DataBase.connectionString,
 app.use(express.json());
 app.use(routerMainApp);
 
-app.listen(config.normalizePort(), () => {
+app.listen(process.env.PORT || config.normalizePort(), () => {
     console.log('Aplicação rodando na porta 3000');
 });
   
