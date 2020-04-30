@@ -1,8 +1,8 @@
 class ConfigApp {
 
-    port: string;
+    port: any;
 
-    constructor(port) {
+    constructor(port: number) {
         this.port = port;
     }
 
