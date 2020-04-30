@@ -34,21 +34,26 @@ userRouter.post('/login', async (req, res) => {
     
     if (!user) res.status(400).json({ message: 'Usuário não existe!' });
 
-    if (!User.isValidPassword(body.password, user.password)) {
-        res.status(400).json({ message: 'E-mail ou senha inválidos!' });
-    }
 
-    const id = user._id;
-    const token = jwt.sign({ id }, 'calmdown', {
-        expiresIn: '24h'
-    });
+    if (user) {
 
-    res.status(200).send({
-        message: 'Seja bem vindo!',
-        token: token,
-        user: user
-    });
+        if (!User.isValidPassword(body.password, user.password)) {
+            res.status(400).json({ message: 'E-mail ou senha inválidos!' });
+        }
 
+        const id = user._id;
+        const token = jwt.sign({ id }, 'calmdown', {
+            expiresIn: '24h'
+        });
+
+        res.status(200).send({
+            message: 'Seja bem vindo!',
+            token: token,
+            user: user
+        });
+
+    }   
+    
 });
 
 export default userRouter;

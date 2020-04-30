@@ -1,13 +1,16 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document, Model } from 'mongoose';
 
-export interface UserModel {
-    _id ?: string;
+export interface UserModel extends Document {
+    _id : string;
     name: string;
     photo: string;
     email: string;
     password: string;
-    encryptPassword: Function
-    isValidPassword: Function
+}
+
+export interface IUserModel extends Model<UserModel> {
+    encryptPassword(password: string): void;
+    isValidPassword(password: string, hash: string): boolean;
 }
 
 const UserSchema = new Schema<UserModel>({
@@ -32,7 +35,7 @@ const UserSchema = new Schema<UserModel>({
     }
 });
 
-UserSchema.static('encryptPassword', (password) => {
+UserSchema.static('encryptPassword', (password: string) => {
 
     const bcrypt = require('bcrypt');
     return bcrypt.hashSync(password, 10);
@@ -40,7 +43,7 @@ UserSchema.static('encryptPassword', (password) => {
 });
 
 
-UserSchema.static('isValidPassword', (password, hash) => {
+UserSchema.static('isValidPassword', (password: string, hash: string) => {
 
     const bcrypt = require('bcrypt');
     return bcrypt.compareSync(password, hash);
@@ -48,6 +51,6 @@ UserSchema.static('isValidPassword', (password, hash) => {
 });
 
 
-const User = model('User', UserSchema);
+const User: IUserModel = model<UserModel, IUserModel>('User', UserSchema);
 
 export default User;

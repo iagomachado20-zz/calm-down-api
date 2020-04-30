@@ -24,7 +24,7 @@ messageRouter.post('/create-message', async (req, res) => {
 
 });
 
-messageRouter.get('/list-messages', async (req, res) => {
+messageRouter.get('/list-messages', async (_, res) => {
 
     Message.find({})
         .populate({ 
