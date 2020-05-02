@@ -1,3 +1,3 @@
 export const DataBase = {
-    connectionString: 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false'
+    connectionString: 'mongodb+srv://calmdown:calmdown1234@cluster0-0qhz4.mongodb.net/test?retryWrites=true&w=majority'
 };

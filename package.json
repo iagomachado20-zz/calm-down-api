@@ -11,7 +11,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "dev": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts"
+    "dev": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts",
+    "start": "node server.js"
   },
   "license": "ISC",
   "dependencies": {
