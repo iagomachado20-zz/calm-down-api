@@ -13,6 +13,10 @@ const PostSchema = new Schema<any>({
         type: String,
         required: true
     },
+    isComment: {
+        type: Boolean,
+        default: false
+    },
     date: {
         type: Date,
         default: new Date()
