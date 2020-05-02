@@ -2,6 +2,7 @@ import { DataBase } from './db/connection';
 import express from "express";
 import routerMainApp from "./routes/routes-app";
 import mongoose from 'mongoose';
+import cors from 'cors';
 import ConfigApp from './utils/configs.app';
 
 const app = express();
@@ -11,6 +12,7 @@ mongoose.connect(DataBase.connectionString,
     { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
+app.use(cors());
 app.use(express.json());
 app.use(routerMainApp);
 
