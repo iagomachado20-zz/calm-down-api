@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = (req ?: any, res ?: any, next ?: any) => {
+const authGuard = (req ?: any, res ?: any, next ?: any) => {
 
     try  {
         let token = req.headers['x-access-token'] || req.headers.authorization;
@@ -30,3 +30,5 @@ module.exports = (req ?: any, res ?: any, next ?: any) => {
     }
 
 };
+
+export default authGuard;

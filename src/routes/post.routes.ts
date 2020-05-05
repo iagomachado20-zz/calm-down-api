@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-const authGuard = require('../middlewares/auth.middleware');
+import authGuard from '../middlewares/auth.middleware';
 import Post from '../models/post.schemas';
 
 const postRouter = Router();
