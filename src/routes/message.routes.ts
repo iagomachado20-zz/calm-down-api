@@ -24,20 +24,21 @@ messageRouter.post('/create-message', async (req, res) => {
 
 });
 
-messageRouter.get('/list-messages', async (_, res) => {
+messageRouter.get('/list-messages', async (_, res) => { 
 
-    Message.find({})
-        .populate({ 
-            path: 'category', 
-            sort: { category: -1}}
-        )
-        .exec((err, docs) => {
-            
-            if (err) res.status(400).json(err);
 
-            res.send(docs);
+    const allCategories = await Category.find().lean();
 
-        });
+    await Promise.all(allCategories.map(async (category: any) => {
+
+        await Message.find({ category: category._id })
+        .then(messages => category.messages = messages);
+
+        return category;
+
+    }));
+
+    res.json(allCategories);
 
 
 });
